@@ -51,7 +51,7 @@ jobs:
 
       - name: Build environment and Compile
         run: |
-          nix-shell noir_wasm.nix --pure --run "./build.sh"
+          nix-shell default.nix --pure --run "./build.sh"
 
       - name: push
         uses: actions-x/commit@v6
