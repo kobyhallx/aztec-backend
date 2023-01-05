@@ -2,9 +2,9 @@
 
 main_dir=$(pwd)
 CACHE_DIR="$main_dir/.cache"
-AZBACKEND_REPO_CACHE="$CACHE_DIR/aztec_backend"
+AZBACKEND_REPO_CACHE="$CACHE_DIR/aztec-backend"
 GIT_VENDOR_URL="https://github.com"
-AZBACKEND_REPO_PATH="kobyhallx/aztec_backend"
+AZBACKEND_REPO_PATH="kobyhallx/aztec-backend"
 AZBACKEND_CLONE_URL="$GIT_VENDOR_URL/$AZBACKEND_REPO_PATH.git"
 AZBACKEND_BUILD="$main_dir/.build"
 
