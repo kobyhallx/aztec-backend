@@ -22,11 +22,11 @@ jobs:
         with:
           repository: 'kobyhallx/aztec_backend'
           ref: 'f96d5baed03d5058e783827d105e2c83d290c65d'
-          path: '.cache/noir'
+          path: '.cache/aztec_backend'
 
       - name: Collect Revision
         id: collect-rev
-        working-directory: '.cache/noir'
+        working-directory: '.cache/aztec_backend'
         run: |
           echo "NOIR_REV_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
