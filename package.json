@@ -1,5 +1,5 @@
 {
-  "name": "@noir-lang/aztec_backend_wasm",
+  "name": "@noir-lang/aztec_backend",
   "version": "0.1.0-f96d5ba",
   "files": [
     "nodejs",
@@ -12,6 +12,6 @@
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/noir-lang/aztec_backend.git"
+    "url": "https://github.com/noir-lang/aztec-backend.git"
   }
 }

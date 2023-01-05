@@ -56,6 +56,6 @@ jobs:
       - name: push
         uses: actions-x/commit@v6
         with:
-          message: 'tracking noir@${{ steps.collect-rev.outputs.NOIR_REV_SHORT }}'
+          message: 'tracking aztec_backend@${{ steps.collect-rev.outputs.NOIR_REV_SHORT }}'
           force: true
           name: 'kobyhallx'

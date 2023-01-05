@@ -60,6 +60,6 @@ AZBACKEND_REV_SHORT=$(git rev-parse --short HEAD)
 cd $main_dir
 sed -i -E "s/\[noir-lang\/noir@.+\]\(.+\)/\[noir-lang\/noir@$AZBACKEND_REV_SHORT\](https:\/\/github.com\/noir-lang\/noir\/tree\/$AZBACKEND_REV)/g" ./README.md
 
-cat ./package.json | jq '.repository = { "type" : "git", "url" : "https://github.com/noir-lang/aztec_backend.git" }' | tee ./package.json
+cat ./package.json | jq '.name = "@noir-lang/aztec_backend"' | jq '.repository = { "type" : "git", "url" : "https://github.com/noir-lang/aztec-backend.git" }' | tee ./package.json
 
 
