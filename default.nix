@@ -27,6 +27,7 @@ pkgs.mkShell.override { stdenv = llvmstdenv;} {
     nodePackages.npm
     binaryen
     jq
+    toml2json
     starship
   ];
 

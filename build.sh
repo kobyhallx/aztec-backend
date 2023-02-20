@@ -1,16 +1,33 @@
 #!/usr/bin/env bash
 
 main_dir=$(pwd)
-CACHE_DIR="$main_dir/.cache"
-AZBACKEND_REPO_CACHE="$CACHE_DIR/aztec_backend"
 GIT_VENDOR_URL="https://github.com"
+NOIR_REPO_PATH="noir-lang/noir"
 AZBACKEND_REPO_PATH="kobyhallx/aztec_backend"
-AZBACKEND_CLONE_URL="$GIT_VENDOR_URL/$AZBACKEND_REPO_PATH.git"
-AZBACKEND_BUILD="$main_dir/.build"
+
+CACHE_DIR="$main_dir/.cache"
+BUILD_ROOT_DIR="$main_dir/.build"
+
+NOIR_REPO_CACHE="$CACHE_DIR/noir"
+NOIR_BUILD="$BUILD_ROOT_DIR/noir"
+NOIR_CLONE_URL="$GIT_VENDOR_URL/$NOIR_REPO_PATH"
+
+AZBACKEND_REPO_CACHE="$CACHE_DIR/aztec_backend"
+AZBACKEND_BUILD="$BUILD_ROOT_DIR/aztec-backend"
+AZBACKEND_CLONE_URL="$GIT_VENDOR_URL/$AZBACKEND_REPO_PATH"
 
 rm -rf "$AZBACKEND_BUILD"
 
 mkdir -p "$AZBACKEND_BUILD"
+
+if [[ -d "$NOIR_REPO_CACHE" ]]; then
+    echo "$NOIR_REPO_CACHE exists on your filesystem, using it for build..."
+else
+    echo "$NOIR_REPO_CACHE does not exists on your filesystem, clonning from $NOIR_CLONE_URL"
+    git clone $NOIR_CLONE_URL $NOIR_REPO_CACHE
+fi
+
+AZTEC_BACKEND_REV=$(toml2json $main_dir/noir/crates/nargo/Cargo.toml | jq -r .dependencies.aztec_backend.rev)
 
 if [[ -d "$AZBACKEND_REPO_CACHE" ]]; then
     echo "$AZBACKEND_REPO_CACHE exists on your filesystem, using it for build..."
@@ -18,7 +35,7 @@ else
     echo "$AZBACKEND_REPO_CACHE does not exists on your filesystem, clonning from $AZBACKEND_CLONE_URL"
     git clone $AZBACKEND_CLONE_URL $AZBACKEND_REPO_CACHE
     cd $AZBACKEND_REPO_CACHE
-    git checkout f96d5baed03d5058e783827d105e2c83d290c65d
+    git reset --hard $AZTEC_BACKEND_REV
 fi
 
 cp -a "$AZBACKEND_REPO_CACHE/." "$AZBACKEND_BUILD/"
@@ -39,27 +56,27 @@ fi
 
 jq -s '.[0] * .[1]' pkg/nodejs/package.json pkg/web/package.json | jq '.files = ["nodejs", "web", "package.json"]' | jq ".version += \"-$(git rev-parse --short HEAD)\"" | jq '.main = "./nodejs/" + .main | .module = "./web/" + .module | .types = "./web/" + .types' | tee ./pkg/package.json
 
-rm pkg/nodejs/package.json pkg/nodejs/README.md pkg/nodejs/.gitignore
-rm pkg/web/package.json pkg/web/README.md pkg/web/.gitignore
+# rm pkg/nodejs/package.json pkg/nodejs/README.md pkg/nodejs/.gitignore
+# rm pkg/web/package.json pkg/web/README.md pkg/web/.gitignore
 
 
 cd $main_dir
 
-rm -rf ./nodejs
-rm -rf ./web
-rm package.json
+rm -rf $main_dir/nodejs
+rm -rf $main_dir/web
+rm $main_dir/package.json
 
 cp -a "$AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/." ./nodejs
 cp -a "$AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/." ./web
-cp "$AZBACKEND_BUILD/aztec_backend_wasm/pkg/package.json" ./
+cp "$AZBACKEND_BUILD/aztec_backend_wasm/pkg/package.json" $main_dir/
 
 cd $AZBACKEND_BUILD
 AZBACKEND_REV=$(git rev-parse HEAD)
 AZBACKEND_REV_SHORT=$(git rev-parse --short HEAD)
 
 cd $main_dir
-sed -i -E "s/\[noir-lang\/noir@.+\]\(.+\)/\[noir-lang\/noir@$AZBACKEND_REV_SHORT\](https:\/\/github.com\/noir-lang\/noir\/tree\/$AZBACKEND_REV)/g" ./README.md
+sed -i -E "s/\[noir-lang\/noir@.+\]\(.+\)/\[noir-lang\/noir@$AZBACKEND_REV_SHORT\](https:\/\/github.com\/noir-lang\/noir\/tree\/$AZBACKEND_REV)/g" $main_dir/README.md
 
-cat ./package.json | jq '.name = "@noir-lang/aztec_backend"' | jq '.repository = { "type" : "git", "url" : "https://github.com/noir-lang/aztec-backend.git" }' | tee ./package.json
+cat $main_dir/package.json | jq '.name = "@noir-lang/aztec_backend"' | jq '.repository = { "type" : "git", "url" : "https://github.com/noir-lang/aztec-backend.git" }' | tee ./package.json
 
 
