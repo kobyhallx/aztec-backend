@@ -27,7 +27,7 @@ else
     git clone $NOIR_CLONE_URL $NOIR_REPO_CACHE
 fi
 
-AZTEC_BACKEND_REV=$(toml2json $main_dir/noir/crates/nargo/Cargo.toml | jq -r .dependencies.aztec_backend.rev)
+AZTEC_BACKEND_REV=$(toml2json $NOIR_REPO_CACHE/crates/nargo/Cargo.toml | jq -r .dependencies.aztec_backend.rev)
 
 if [[ -d "$AZBACKEND_REPO_CACHE" ]]; then
     echo "$AZBACKEND_REPO_CACHE exists on your filesystem, using it for build..."
@@ -56,8 +56,8 @@ fi
 
 jq -s '.[0] * .[1]' pkg/nodejs/package.json pkg/web/package.json | jq '.files = ["nodejs", "web", "package.json"]' | jq ".version += \"-$(git rev-parse --short HEAD)\"" | jq '.main = "./nodejs/" + .main | .module = "./web/" + .module | .types = "./web/" + .types' | tee ./pkg/package.json
 
-# rm pkg/nodejs/package.json pkg/nodejs/README.md pkg/nodejs/.gitignore
-# rm pkg/web/package.json pkg/web/README.md pkg/web/.gitignore
+rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/.gitignore
+rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/.gitignore
 
 
 cd $main_dir
