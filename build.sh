@@ -56,8 +56,8 @@ fi
 
 jq -s '.[0] * .[1]' pkg/nodejs/package.json pkg/web/package.json | jq '.files = ["nodejs", "web", "package.json"]' | jq ".version += \"-$(git rev-parse --short HEAD)\"" | jq '.main = "./nodejs/" + .main | .module = "./web/" + .module | .types = "./web/" + .types' | tee ./pkg/package.json
 
-rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/.gitignore
-rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/.gitignore
+# rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/nodejs/.gitignore
+# rm $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/package.json $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/README.md $AZBACKEND_BUILD/aztec_backend_wasm/pkg/web/.gitignore
 
 
 cd $main_dir
