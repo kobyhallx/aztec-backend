@@ -1,6 +1,6 @@
 {
   "name": "@noir-lang/aztec_backend",
-  "version": "0.1.0-0c3b2f2",
+  "version": "0.1.0-f96d5ba",
   "files": [
     "nodejs",
     "web",
