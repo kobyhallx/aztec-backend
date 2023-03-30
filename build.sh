@@ -3,7 +3,7 @@
 main_dir=$(pwd)
 GIT_VENDOR_URL="https://github.com"
 NOIR_REPO_PATH="noir-lang/noir"
-AZBACKEND_REPO_PATH="kobyhallx/aztec_backend"
+AZBACKEND_REPO_PATH="noir-lang/aztec_backend"
 
 CACHE_DIR="$main_dir/.cache"
 BUILD_ROOT_DIR="$main_dir/.build"
