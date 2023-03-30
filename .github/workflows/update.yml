@@ -51,7 +51,7 @@ jobs:
 
       - name: Build environment and Compile
         run: |
-          nix-shell default.nix --pure --run "./build.sh"
+          nix-shell default.nix --run "./build.sh"
 
       - name: Configure git
         run: |
