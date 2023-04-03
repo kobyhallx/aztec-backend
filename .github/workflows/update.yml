@@ -59,11 +59,14 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: aztec_backend.tar.gz
-          path: ./aztec_backend/aztec_backend.tar.gz
+          name: aztec_backend
+          path: ./aztec_backend/
 
       - name: Commit updates
         run: |
+          cp -r aztec_backend/result/nodejs ./
+          cp -r aztec_backend/result/web ./
+          cp aztec_backend/result/package.json ./
           git add nodejs web package.json
           git commit -m "updateing package"
           # noir@${{ steps.collect-rev.outputs.NOIR_REV_SHORT }}
