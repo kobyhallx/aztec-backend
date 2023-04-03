@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: 'kobyhallx/aztec_backend'
-          ref: 'f96d5baed03d5058e783827d105e2c83d290c65d'
+          ref: '28014d803d052a7f459e03dbd7b5b9210449b1d0'
           path: '.cache/aztec_backend'
 
       - name: Collect Revision
