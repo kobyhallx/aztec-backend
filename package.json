@@ -1,15 +1,14 @@
 {
-  "name": "@noir-lang/aztec_backend",
-  "version": "0.1.0-28014d8",
+  "name": "@noir-lang/aztec_backend_wasm",
+  "version": "0.1.0",
+  "main": "nodejs/aztec_backend_wasm.js",
+  "module": "web/aztec_backend_wasm.js",
   "files": [
     "nodejs",
     "web",
     "package.json"
   ],
-  "main": "./nodejs/aztec_backend_wasm.js",
-  "types": "./web/aztec_backend_wasm.d.ts",
-  "module": "./web/aztec_backend_wasm.js",
-  "sideEffects": false,
+  "types": "web/aztec_backend_wasm.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/noir-lang/aztec-backend.git"
