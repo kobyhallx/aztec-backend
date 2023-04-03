@@ -45,7 +45,7 @@ jobs:
         uses: rikhuijzer/cache-install@v1.0.9
         with:
           key: nix-${{ hashFiles('aztec_backend/flake.lock') }}
-          nix_file: 'flake.nix'
+          nix_file: 'aztec_backend/flake.nix'
 
       - name: Build environment and Compile
         working-directory: 'aztec_backend'
