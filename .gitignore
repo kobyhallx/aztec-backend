@@ -1,4 +1,6 @@
 .cache/
 build/
 .build/
+aztec_backend/
+result/
 *.code-workspace
