@@ -50,7 +50,7 @@ jobs:
       - name: Build environment and Compile
         working-directory: 'aztec_backend'
         run: |
-          nix build 
+          nix --extra-experimental-features "nix-command flakes" build 
 
       - name: Zip
         run: |
