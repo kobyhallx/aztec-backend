@@ -52,15 +52,16 @@ jobs:
         run: |
           nix --extra-experimental-features "nix-command flakes" build 
 
-      - name: Zip
+      - name: Remove target
         run: |
-          7z a -ttar -so -an ./aztec_backend/result/* | 7z a -si ./aztec_backend/aztec_backend.tar.gz
+          rm -rf ./aztec_backend/result/target
+          # 7z a -ttar -so -an ./aztec_backend/result/* | 7z a -si ./aztec_backend/aztec_backend.tar.gz
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: aztec_backend
-          path: ./aztec_backend/
+          path: ./aztec_backend/result
 
       - name: Commit updates
         run: |
@@ -68,6 +69,6 @@ jobs:
           cp -r aztec_backend/result/web ./
           cp aztec_backend/result/package.json ./
           git add nodejs web package.json
-          git commit -m "updateing package"
+          git commit -m "updating package"
           # noir@${{ steps.collect-rev.outputs.NOIR_REV_SHORT }}
           git push --force
