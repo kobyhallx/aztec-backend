@@ -33,7 +33,7 @@ jobs:
         id: collect-rev
         working-directory: 'aztec_backend'
         run: |
-          echo "NOIR_REV_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "AB_REV_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "$(git rev-parse --short HEAD)" >> .rev
 
       - name: Add .rev file to Git Tree
@@ -69,6 +69,5 @@ jobs:
           cp -r aztec_backend/result/web ./
           cp aztec_backend/result/package.json ./
           git add nodejs web package.json
-          git commit -m "updating package"
-          # noir@${{ steps.collect-rev.outputs.NOIR_REV_SHORT }}
+          git commit -m "updating package aztec_backend@${{ steps.collect-rev.outputs.AB_REV_SHORT }}"
           git push --force
